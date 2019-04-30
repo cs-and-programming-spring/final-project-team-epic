@@ -3,19 +3,11 @@
 #include <string>
 #include <fstream>
 #include <vector>
-
-
+#include <sstream>
 
 using namespace std;
 
-class cars
-{
-    string make;
-    string model;
-    string year;
-
-};
-class drivers
+class drivers           // Creating class for driveres
 {
     public:
     string name;
@@ -29,7 +21,7 @@ class drivers
     char colon;
 
 
-    void driverInfo()
+    void driverInfo()         // called to obtain drivers info
     {
 
       cout << " What is your name "<< endl;
@@ -44,8 +36,6 @@ class drivers
   cin >> hour >> colon >> min ;
 
     }
-
-
 };
 class riders
 {
@@ -80,12 +70,14 @@ cin >> hour >> colon >> min ;
 
 };
 
+
+
 void readingDriversfiles()
 {
 
   vector<drivers> newDriver;
   drivers oldDriver;
-  int count = 1;
+
   while(true)
   {
   ifstream infile("driver.txt");
@@ -121,7 +113,6 @@ int main()
    int driversCount = 0;
    int ridersCount = 0;
    bool running = true;
-   char colon;
 
    drivers driver[driversCount+1];
    riders rider[ridersCount+1];
@@ -136,37 +127,80 @@ int main()
    cin >> ans;
    if (ans == 1)
    {
+     string driverFile="driverFile0";
+     string txt="txt";
+     string dot=".";
 
+     driverFile = driverFile+dot;
+     driverFile = driverFile+txt;
+
+    int i = 1;
+    while(true)
+    {
+
+      cout << i <<endl;
+      string result;
+      stringstream ss;
+      ss << i;
+      result = ss.str();
+      cout <<result <<endl;
+
+
+      driverFile = driverFile.replace(10,1,result);
+      cout << driverFile <<endl;
+
+
+       ifstream infile(driverFile);
+        if (!infile)
+      {
+        cout << "Error opening the file. \n";
+        break;
+      }
+
+        while (infile.good())
+       {
+
+            infile >> driver[driversCount].name >> driver[driversCount].phoneNum >> driver[driversCount].city >> driver[driversCount].month
+            >> driver[driversCount].colon >> driver[driversCount].day >> driver[driversCount].hour
+            >>driver[driversCount].colon >> driver[driversCount].min ;
+        }
+
+       infile.close();
+       {
+       cout <<  driver[driversCount].name << " " << driver[driversCount].phoneNum << " " << driver[driversCount].city
+            << " " << driver[driversCount].month << " " <<  driver[driversCount].colon << " " << driver[driversCount].day << driver[driversCount].hour
+            <<" " << driver[driversCount].colon << " " << driver[driversCount].min << "\n";
+       }
+       i++;
+       cout << driversCount << " DriversCount "<<endl;
+
+       driversCount++;
+       cout << driversCount << " DriversCount "<<endl;
+
+    }
 
 
      driver[driversCount].driverInfo();
-   string line;
 
 
 
 
-     ofstream myfile ("DriverList.txt");
-     for(int i = 0; i <= driversCount; i++)
+
+     ofstream myfile (driverFile);
+
      {
-        ifstream file ("DriverList.txt");
-       {
-         while ( getline (file,line) )
-         {
-           cout << line << '\n';
-         }
-       }
-         myfile << line << " \n";
-         myfile << driver[i].name << " \n";
-         myfile << driver[i].phoneNum << " \n";
-         myfile << driver[i].city << " \n";
-         myfile << driver[i].day << " \n";
-         myfile << driver[i].month << " \n";
-         myfile << driver[i].hour << " \n";
-         myfile << driver[i].min << " \n";
+
+         myfile << driver[driversCount].name << " \n";
+         myfile << driver[driversCount].phoneNum << " \n";
+         myfile << driver[driversCount].city << " \n";
+         myfile << driver[driversCount].day << " \n";
+         myfile << driver[driversCount].month << " \n";
+         myfile << driver[driversCount].hour << " \n";
+         myfile << driver[driversCount].min << " \n";
        }
        myfile.close();
-     //cout << driver[driversCount].city;
-    // driversCount++;
+
+
 
    }
     else if (ans == 2)
@@ -176,7 +210,10 @@ int main()
       for(int i = 0; i <= driversCount; i++)    // start to loop through the array
          {
           //drivers drive= ;
-          //riders ride=;
+          cout  << driver[0].city <<endl;
+          cout  << driver[1].city <<endl;
+
+
 
             if (rider[0].city == driver[i].city  )   // if match is found
                {
@@ -192,8 +229,7 @@ int main()
                else
              cout << " No drivers available at this time, please try again later"<<endl;
 
-             cout << " Would you like to check list of cities "<<endl;
-             cout << rider[0].name <<endl;
+
           }
 
     }

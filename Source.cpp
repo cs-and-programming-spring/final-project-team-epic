@@ -19,6 +19,8 @@ class drivers           // Creating class for driveres
     int day;
     int month;
     char colon;
+    char colon2;
+
 
 
     void driverInfo()         // called to obtain drivers info
@@ -37,7 +39,7 @@ class drivers           // Creating class for driveres
 
     }
 };
-class riders
+class riders       // creates a class for riders
 {
 public:
 string name;
@@ -49,10 +51,12 @@ int min;
 int day;
 int month;
 char colon;
+char colon2;
 
 
 
-void riderInfo()
+
+void riderInfo()       // obtaining riders info
 {
 
   cout << " What is your name "<< endl;
@@ -65,54 +69,17 @@ cin>>city;
 cin >> month >> colon >> day;
   cout << " What TIME you are traveling, please use 24 hour  system "<< endl;
 cin >> hour >> colon >> min ;
-
 }
-
 };
-
-
-
-void readingDriversfiles()
-{
-
-  vector<drivers> newDriver;
-  drivers oldDriver;
-
-  while(true)
-  {
-  ifstream infile("driver.txt");
-    	if (!infile)
-  	{
-  		cout << "Error opening the file. \n";
-      break;
-  	}
-
-    	while (infile.good())
-  	 {
-
-        	infile >> oldDriver.name >> oldDriver.phoneNum >> oldDriver.city;
-  		newDriver.push_back(oldDriver);
-  	}
-
-     infile.close();
-     for (int i =0; i<2; i++)  //just changed here
-     {
-  	 cout <<  newDriver[i].name << " " << newDriver[i].phoneNum << " " << newDriver[i].city << "\n";
-     }
-
-     //return 0;
-    }
-  }
-
 
 
 
 int main()
 {
 
-   int driversCount = 0;
-   int ridersCount = 0;
-   bool running = true;
+   int driversCount = 0;         // keeps track of drivers 
+   int ridersCount = 0;           // keeps track of riders 
+   bool running = true;             // used to run the program as needed
 
    drivers driver[driversCount+1];
    riders rider[ridersCount+1];
@@ -121,106 +88,81 @@ int main()
    {
    int ans;
 
-
-
    cout << " Please Enter 1 if you are a Driver or 2 if you are a Rider : " << endl;
    cin >> ans;
 
-   string driverFile="driverFile0";
-   string txt="txt";
-   string dot=".";
+   string driverFile="driverFile0";      // creating a name for the driver files
+   string txt="txt";                    
+   string dot=".";     
    int position = driverFile.length();
    driverFile = driverFile.insert(position,dot);
-   driverFile = driverFile+txt;
+   driverFile = driverFile+txt; 
    cout << driverFile <<endl;
 
-   int i = 1;
+   int i = 1;              //used to create different files names for drivers 
    while(true)
    {
 
-    cout << i <<endl;
-    string result;
-    stringstream ss;
+    string result;                       // next 4 lines used to convert i from int to string 
+    stringstream ss; 
     ss << i;
     result = ss.str();
-    cout <<result <<endl;
+    driverFile = driverFile.replace(10,1,result);  
 
 
-    driverFile = driverFile.replace(10,1,result);
-    cout << driverFile <<endl;
-
-
-     ifstream infile(driverFile);
-      if (!infile)
+     ifstream infile(driverFile);          // reading files with " driverFile(i).text"
+      if (!infile)                          // if no files are found, break out of the while loop 
     {
-      cout << "Error opening the file. \n";
-      break;
+      break;      
     }
 
-      while (infile.good())
+      while (infile.good())                  // while more lines exist in the file 
      {
 
           infile >> driver[driversCount].name >> driver[driversCount].phoneNum >> driver[driversCount].city >> driver[driversCount].month
-          >> driver[driversCount].colon >> driver[driversCount].day >> driver[driversCount].hour
-          >>driver[driversCount].colon >> driver[driversCount].min ;
+           >> driver[driversCount].day >> driver[driversCount].hour
+           >> driver[driversCount].min ;      // used to read files one line at a time 
       }
 
-     infile.close();
+     infile.close();         
      {
      cout <<  driver[driversCount].name << " " << driver[driversCount].phoneNum << " " << driver[driversCount].city
-          << " " << driver[driversCount].month << " " <<  driver[driversCount].colon << " " << driver[driversCount].day << driver[driversCount].hour
-          <<" " << driver[driversCount].colon << " " << driver[driversCount].min << "\n";
+          << " " << driver[driversCount].month << " "  << driver[driversCount].day << driver[driversCount].hour
+           << " " << driver[driversCount].min << "\n";         
      }
-     i++;
-     cout << driversCount << " DriversCount "<<endl;
-
-     driversCount++;
-     cout << driversCount << " DriversCount "<<endl;
-
+     i++;             // go to the next driver file 
+     driversCount++;    // create a new driver 
+     
    }
-
-
-
-   if (ans == 1)
+   if (ans == 1)  
    {
 
-     driver[driversCount].driverInfo();
+     driver[driversCount].driverInfo(); // if a driver is being added, take their info from the class
 
 
-
-
-
-     ofstream myfile (driverFile);
+     ofstream myfile (driverFile);          // create a file for the new driver 
 
      {
 
-         myfile << driver[driversCount].name << " \n";
-         myfile << driver[driversCount].phoneNum << " \n";
-         myfile << driver[driversCount].city << " \n";
-         myfile << driver[driversCount].day << " \n";
-         myfile << driver[driversCount].month << " \n";
-         myfile << driver[driversCount].hour << " \n";
-         myfile << driver[driversCount].min << " \n";
+         myfile << driver[driversCount].name << " \n";     // first line in the text file 
+         myfile << driver[driversCount].phoneNum << " \n"; // second line in the text file
+         myfile << driver[driversCount].city << " \n";     // third line in the text file
+         myfile << driver[driversCount].day << " \n";      // fourth line in the text file
+         myfile << driver[driversCount].month << " \n";    // fifth line in the text file
+         myfile << driver[driversCount].hour << " \n";     // sixth line in the text file
+         myfile << driver[driversCount].min << " \n";      // seventh line in the text file 
        }
-       myfile.close();
-
-
-
+       myfile.close();                                     // close the file 
    }
     else if (ans == 2)
     {
 
-      rider[ridersCount].riderInfo();
-      for(int i = 0; i <= driversCount; i++)    // start to loop through the array
+      rider[ridersCount].riderInfo();                 
+      for(int i = 0; i <= driversCount; i++)    // start looping through drivers 
          {
-          //drivers drive= ;
-          cout  << driver[0].city <<endl;
-          cout  << driver[1].city <<endl;
 
-
-
-            if (rider[ridersCount].city == driver[i].city &&  rider[ridersCount].month == driver[i].month
-            &&rider[ridersCount].day == driver[i].day    )   // if match is found
+            if (rider[ridersCount].city == driver[i].city && rider[ridersCount].month == driver[i].month
+            && rider[ridersCount].day == driver[i].day      )   // if match is found
                {
                        cout << " Congrats, we found a match " <<endl;  	// turn flag on
                        cout << " Your Driver profile : " <<endl;
@@ -228,19 +170,18 @@ int main()
                        cout << " name : ";
                        cout <<  driver[i].name <<endl;
                        cout << " phone number : " << driver[i].phoneNum <<endl;
+                       cout << " Driver leaving at  : " << driver[i].hour << ":"<<driver[i].min<<endl;
+
                        cout << " **********************" <<endl;
-                       //break ;    // break out of for loop
                }
                else
              cout << " No other/drivers available at this time, please try again later"<<endl;
-
-
           }
-
     }
 
    cout << " Do you want to run the program again ? "<<endl;
    cout << " Enter 'yes' for Yes or 'no' for  No " << endl;
+   
    enum  trueFalse { no , yes };
    string input;
    cin >> input;

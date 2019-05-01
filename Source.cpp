@@ -125,60 +125,64 @@ int main()
 
    cout << " Please Enter 1 if you are a Driver or 2 if you are a Rider : " << endl;
    cin >> ans;
-   if (ans == 1)
+
+   string driverFile="driverFile0";
+   string txt="txt";
+   string dot=".";
+   int position = driverFile.length();
+   driverFile = driverFile.insert(position,dot);
+   driverFile = driverFile+txt;
+   cout << driverFile <<endl;
+
+   int i = 1;
+   while(true)
    {
-     string driverFile="driverFile0";
-     string txt="txt";
-     string dot=".";
 
-     driverFile = driverFile+dot;
-     driverFile = driverFile+txt;
+    cout << i <<endl;
+    string result;
+    stringstream ss;
+    ss << i;
+    result = ss.str();
+    cout <<result <<endl;
 
-    int i = 1;
-    while(true)
+
+    driverFile = driverFile.replace(10,1,result);
+    cout << driverFile <<endl;
+
+
+     ifstream infile(driverFile);
+      if (!infile)
     {
-
-      cout << i <<endl;
-      string result;
-      stringstream ss;
-      ss << i;
-      result = ss.str();
-      cout <<result <<endl;
-
-
-      driverFile = driverFile.replace(10,1,result);
-      cout << driverFile <<endl;
-
-
-       ifstream infile(driverFile);
-        if (!infile)
-      {
-        cout << "Error opening the file. \n";
-        break;
-      }
-
-        while (infile.good())
-       {
-
-            infile >> driver[driversCount].name >> driver[driversCount].phoneNum >> driver[driversCount].city >> driver[driversCount].month
-            >> driver[driversCount].colon >> driver[driversCount].day >> driver[driversCount].hour
-            >>driver[driversCount].colon >> driver[driversCount].min ;
-        }
-
-       infile.close();
-       {
-       cout <<  driver[driversCount].name << " " << driver[driversCount].phoneNum << " " << driver[driversCount].city
-            << " " << driver[driversCount].month << " " <<  driver[driversCount].colon << " " << driver[driversCount].day << driver[driversCount].hour
-            <<" " << driver[driversCount].colon << " " << driver[driversCount].min << "\n";
-       }
-       i++;
-       cout << driversCount << " DriversCount "<<endl;
-
-       driversCount++;
-       cout << driversCount << " DriversCount "<<endl;
-
+      cout << "Error opening the file. \n";
+      break;
     }
 
+      while (infile.good())
+     {
+
+          infile >> driver[driversCount].name >> driver[driversCount].phoneNum >> driver[driversCount].city >> driver[driversCount].month
+          >> driver[driversCount].colon >> driver[driversCount].day >> driver[driversCount].hour
+          >>driver[driversCount].colon >> driver[driversCount].min ;
+      }
+
+     infile.close();
+     {
+     cout <<  driver[driversCount].name << " " << driver[driversCount].phoneNum << " " << driver[driversCount].city
+          << " " << driver[driversCount].month << " " <<  driver[driversCount].colon << " " << driver[driversCount].day << driver[driversCount].hour
+          <<" " << driver[driversCount].colon << " " << driver[driversCount].min << "\n";
+     }
+     i++;
+     cout << driversCount << " DriversCount "<<endl;
+
+     driversCount++;
+     cout << driversCount << " DriversCount "<<endl;
+
+   }
+
+
+
+   if (ans == 1)
+   {
 
      driver[driversCount].driverInfo();
 
@@ -215,7 +219,8 @@ int main()
 
 
 
-            if (rider[0].city == driver[i].city  )   // if match is found
+            if (rider[ridersCount].city == driver[i].city &&  rider[ridersCount].month == driver[i].month
+            &&rider[ridersCount].day == driver[i].day    )   // if match is found
                {
                        cout << " Congrats, we found a match " <<endl;  	// turn flag on
                        cout << " Your Driver profile : " <<endl;
@@ -227,7 +232,7 @@ int main()
                        //break ;    // break out of for loop
                }
                else
-             cout << " No drivers available at this time, please try again later"<<endl;
+             cout << " No other/drivers available at this time, please try again later"<<endl;
 
 
           }
@@ -235,8 +240,16 @@ int main()
     }
 
    cout << " Do you want to run the program again ? "<<endl;
-   cout << " Enter 1 for Yes and 2 for  No " << endl;
-   cin >> running ;
+   cout << " Enter 'yes' for Yes or 'no' for  No " << endl;
+   enum  trueFalse { no , yes };
+   string input;
+   cin >> input;
+   if (input == "yes"){
+     running = yes;
+   }
+   else{
+     running = no;
+   }
 
 }
 }
